@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -15,13 +16,17 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.grey[350],
         body: Container(
           margin: EdgeInsets.all(20),
-          height: 1000,
-          width: 500,
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
           color: Colors.white,
           child: Card(
             child: Padding(

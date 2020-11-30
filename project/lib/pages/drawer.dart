@@ -1,9 +1,9 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:project/theme/theme.dart';
 
 class NavDrawer extends StatelessWidget {
-  @override
+  @override  
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
@@ -11,7 +11,7 @@ class NavDrawer extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.indigo[600],
+              color: colors.dkblue,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
