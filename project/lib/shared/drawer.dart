@@ -1,8 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:project/services/auth.dart';
 import 'package:project/theme/theme.dart';
 
 class NavDrawer extends StatelessWidget {
+  final AuthService _auth =AuthService();
   @override  
   Widget build(BuildContext context) {
     return Drawer(
@@ -11,7 +13,7 @@ class NavDrawer extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(
-              color: colors.dkblue,
+              color: colors.pricolor,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +60,9 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.exit_to_app),
             title: Text('Logout'),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: ()async{
+                await _auth.signOut();
+              },
           ),
         ],
       ),

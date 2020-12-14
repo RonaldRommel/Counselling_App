@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:project/ClassStudents.dart';
+import 'package:project/models/ClassStudents.dart';
 // import 'package:project/pages/drawer.dart';
 // import 'package:project/teacher.dart';
 import 'package:project/theme/theme.dart';
 class Teacher extends StatefulWidget {
+  final Map data;
+  Teacher({Key key,this.data}):super(key:key);
   @override
   _TeacherState createState() => _TeacherState();
 }
@@ -28,22 +30,21 @@ class _TeacherState extends State<Teacher> {
     Students(name: "Nasta",picture: "iniesta.jpg",teacher: "Messi",section: "C1"),
     Students(name: "Nari",picture: "neymar.jpg",teacher: "",section: "C1"),
   ]; 
-  Map data={};
+
   @override
   Widget build(BuildContext context) {
   List<Students> stud=[];
   //used to store arguments from nav.push
-  data=ModalRoute.of(context).settings.arguments;
   //used to store students of the clicked teacher
   for (var i = 0; i < students.length ; i++) {
-    if(students[i].teacher==data['name'])
+    if(students[i].teacher==widget.data['name'])
       stud.add(students[i]);
   }
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height*0.08,
-        backgroundColor: colors.dkblue,
+        backgroundColor: colors.pricolor,
         automaticallyImplyLeading: true,
         title:Text("WNC",
           style:  Theme.of(context).textTheme.headline1,
@@ -53,13 +54,13 @@ class _TeacherState extends State<Teacher> {
         children: [
           // row below appbar
           Container(
-            color: colors.ltblue,
+            color: colors.seccolor,
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.06,
             padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
             child: Row(
               children: [
-                Text(data['name'],style: Theme.of(context).textTheme.headline2,),
+                Text(widget.data['name'],style: Theme.of(context).textTheme.headline2,),
                 Spacer(),
                 Text('${stud.length}',style: Theme.of(context).textTheme.headline2,),
                 SizedBox(width: 20,),
@@ -100,7 +101,7 @@ class _TeacherState extends State<Teacher> {
         onPressed: (){
           Navigator.pushNamed(context, '/mapping');
         },
-        backgroundColor: colors.ltblue,
+        backgroundColor: colors.seccolor,
         foregroundColor: Colors.white,
         elevation:10,
         child: Icon(Icons.add),

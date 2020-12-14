@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project/Classteacher.dart';
+import 'package:project/models/Classteacher.dart';
 import 'package:project/theme/theme.dart';
 
 class Mapping extends StatefulWidget {
@@ -31,7 +31,7 @@ class _MappingState extends State<Mapping> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        backgroundColor: colors.dkblue,
+        backgroundColor: colors.pricolor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

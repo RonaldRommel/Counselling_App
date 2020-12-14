@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1073938130701",
+    "project_id": "counselling-44128",
+    "storage_bucket": "counselling-44128.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073938130701:android:0fddf2e04822b877f4b244",
+        "android_client_info": {
+          "package_name": "college.counselling.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1073938130701-3el5kt0phkdpqlar23si05qs3qabgluj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAp0jvTbqyHoMus8LWLnMK7uEVs3AO0N20"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1073938130701-3el5kt0phkdpqlar23si05qs3qabgluj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

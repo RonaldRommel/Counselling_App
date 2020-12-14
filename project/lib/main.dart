@@ -1,19 +1,34 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:project/pages/HOD/dashboard.dart';
-import 'package:project/pages/login.dart';
-import 'package:project/pages/HOD/mapping.dart';
-import 'package:project/pages/HOD/teacher.dart';
+import 'package:flutter/services.dart';
+import 'package:project/models/user.dart';
+import 'package:project/services/auth.dart';
+import 'package:project/services/routegenerator.dart';
 import 'package:project/theme/theme.dart';
-void main() => runApp(MaterialApp(
-  debugShowCheckedModeBanner: false,
-  theme: basicTheme(),
-  initialRoute: '/',
-  routes: {
-    '/':(context) => Login(),
-    '/dashboard':(context) => Dashboard(),
-    '/teacher':(context)=>Teacher(),
-    '/mapping':(context)=>Mapping(),
-  },
-));
+import 'package:provider/provider.dart';
 
-
+void main() async {
+   WidgetsFlutterBinding.ensureInitialized();
+   await Firebase.initializeApp();
+   runApp(Counselling());
+}
+class Counselling extends StatelessWidget {
+  
+  @override
+  Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+    
+    return StreamProvider<TheUser>.value(
+      value: AuthService().user,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: basicTheme(),
+        initialRoute: '/',
+        onGenerateRoute: RouteGenerator.generateRoute,
+      ),
+    );
+  }
+}

@@ -1,7 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:project/pages/drawer.dart';
-import 'package:project/Classteacher.dart';
+import 'package:project/services/auth.dart';
+import 'package:project/shared/drawer.dart';
+import 'package:project/models/Classteacher.dart';
 import 'package:project/theme/theme.dart';
 class Dashboard extends StatefulWidget {
   @override
@@ -35,8 +36,8 @@ class _DashboardState extends State<Dashboard> {
       endDrawer:NavDrawer(),
       appBar: new AppBar(
         toolbarHeight: MediaQuery.of(context).size.height*0.08,
-        backgroundColor: colors.dkblue,
-        automaticallyImplyLeading: true,
+        backgroundColor: colors.pricolor,
+        automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children:[ 
@@ -59,7 +60,7 @@ class _DashboardState extends State<Dashboard> {
         children: [
           //Row below appbar
           Container(
-            color: colors.ltblue,
+            color: colors.seccolor,
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.06,
             padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -88,7 +89,7 @@ class _DashboardState extends State<Dashboard> {
                     child: ListTile(
                       onTap: (){
                         print(teachers[index].name);
-                        Navigator.pushNamed(context, '/teacher',arguments: {
+                        Navigator.pushNamed(context, '/teacherlist',arguments: {
                           'name': teachers[index].name,
                           'students':teachers[index].students,
                         } );
@@ -113,7 +114,7 @@ class _DashboardState extends State<Dashboard> {
       ),
       bottomNavigationBar: BottomAppBar(
         elevation: 15,
-        color: colors.dkblue,
+        color: colors.pricolor,
         child: Row(
           children: [
             IconButton(icon: Icon(Icons.menu),color: Colors.white ,onPressed: () {
