@@ -4,7 +4,6 @@ import 'package:project/models/user.dart';
 
 class AuthService{
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
   //create user obj based on FirebaseUser
   TheUser _userFromFirebaseUser(User user){
     return user!=null? TheUser(uid:user.uid):null;
@@ -14,20 +13,11 @@ class AuthService{
   Stream<TheUser> get user{
     return _auth.authStateChanges()
     .map((_userFromFirebaseUser));
-    // .map((event) => _userFromFirebaseUser(user));
+    // .map((event) => _userFromFirebaseUser(event));
   } 
 
-//   //sign in anon
-//   Future signInAnon()async{
-//     try {
-//       UserCredential result = await _auth.signInAnonymously().timeout(const Duration(seconds: 3));   
-//       User user = result.user;  
-//       return _userFromFirebaseUser(user);
-//     } catch(e){
-//       print(e.toString());
-//       return null;
-//     }
-  // }
+
+
   //sign in with email password
     Future signInWithEmailAndPassword(String email,String password)async{
     try{
@@ -36,7 +26,7 @@ class AuthService{
       print("Sign in worked");
       return _userFromFirebaseUser(user);
     }
-    on PlatformException catch (e){
+    on PlatformException{
       return 'exception';
     }
     on Exception catch (exception){

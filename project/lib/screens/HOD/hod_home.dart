@@ -4,12 +4,12 @@ import 'package:project/services/auth.dart';
 import 'package:project/shared/drawer.dart';
 import 'package:project/models/Classteacher.dart';
 import 'package:project/theme/theme.dart';
-class Dashboard extends StatefulWidget {
+class HodHome extends StatefulWidget {
   @override
-  _DashboardState createState() => _DashboardState();
+  _HodHomeState createState() => _HodHomeState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _HodHomeState extends State<HodHome> {
   //list of teachers of class Teachers
   List<Teachers> teachers=[
     Teachers(name: "Ronaldo",picture: "ronaldo.jpg",students: "25"),

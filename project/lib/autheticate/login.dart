@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/models/user.dart';
 import 'package:project/services/auth.dart';
 import 'package:project/shared/loading.dart';
 import 'package:project/shared/logindeco.dart';
@@ -15,14 +16,12 @@ class _LoginState extends State<Login> {
   final AuthService _auth =AuthService();
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
-  String check="yes";
   //text field state
   String email="";
   RegExp emailcheck = new RegExp(r'^(?=.*?[@])');
   String password="";
   String error="";
   String college="@cambridge.edu.in";
-
   @override 
   Widget build(BuildContext context) {
     return loading?Loading():Scaffold(
@@ -38,6 +37,7 @@ class _LoginState extends State<Login> {
           key: _formKey,
           child: Column(
             children:<Widget> [
+              Text(widget.user,style: TextStyle(color: Colors.redAccent),),
               SizedBox(height:20),
               TextFormField(
                 textAlign: TextAlign.start,
@@ -84,7 +84,6 @@ class _LoginState extends State<Login> {
                   {
                     print(email);
                     print(password);
-                    // Navigator.pushNamed(context, '/hoddashboard');
                     setState(()=>loading=true);
                     dynamic result=await _auth.signInWithEmailAndPassword(email+college, password);
                     if(result ==null){
