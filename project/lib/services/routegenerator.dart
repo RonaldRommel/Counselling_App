@@ -19,8 +19,8 @@ class RouteGenerator{
         return MaterialPageRoute(builder:(context)=>HodHome());
       case '/teacherlist':
         return MaterialPageRoute(builder:(context)=>Teacher(data: args,));
-      case '/mappping':
-        return MaterialPageRoute(builder:(context)=>Mapping());
+      // case '/mappping':
+      //   return MaterialPageRoute(builder:(context)=>Mapping());
 
       return  _errorRoute();
       default:

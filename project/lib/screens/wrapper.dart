@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project/autheticate/authenticate.dart';
 import 'package:project/models/user.dart';
@@ -9,7 +8,7 @@ import 'package:project/screens/Teacher/teacher_home.dart';
 import 'package:project/services/auth.dart';
 import 'package:project/shared/loading.dart';
 import 'package:provider/provider.dart';
-import 'package:project/services/database.dart';
+import 'package:project/database/database.dart';
 
 class Wrapper extends StatelessWidget {
   final bool loading =true;
@@ -22,35 +21,33 @@ class Wrapper extends StatelessWidget {
     }
     else{
       return FutureBuilder(
-        future:DatabaseService().userAccess(user.uid),
-        builder: (context,AsyncSnapshot<String> role) {
-          if(role.data=="Hod")
-            return HodHome();
-          else if(role.data=="Teacher")
-            return TeacherHome();
-          else if(role.data=="Student")
-            return StudentHome();
-          else
+        future:DatabaseService(uid: user.uid).userAccess(),
+        builder: (context,AsyncSnapshot<Map> user) {
+          //check role from database.dart  
+          if(user.connectionState==ConnectionState.done)
+          {
+            switch(user.data['role'])
+            {
+              case 'Hod':
+                return HodHome(department: user.data['department'],);
+              case 'Teacher':
+                return TeacherHome();
+              case 'Student':
+                return StudentHome();  
+              default:
+                _auth.signOut();
+                return Authenticate();
+            }
+          }
+          else if(user.connectionState==ConnectionState.waiting){
+            return Loading();            
+          }
+          else{
+            _auth.signOut();
             return Loading();
+          }
         },
       );
-      // DatabaseService().userAccess(user.uid);
-      // print("in wrapper : ${DatabaseService().userAccess(user.uid)}");
-      // _auth.signOut();
-      // return Authenticate();
-      // return HodHome();
-      // switch(DatabaseService().userAccess(user.uid))
-      // {
-      //   case "Hod":
-      //     return HodHome();
-      //   case "Teacher":
-      //      return TeacherHome();
-      //   case "Student":
-      //     return StudentHome();
-      //   default:
-      //     print("Not available");
-      //     return Authenticate();
-      // }
     }
   }
 }
