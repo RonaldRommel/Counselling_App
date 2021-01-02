@@ -4,7 +4,7 @@ import 'package:project/services/auth.dart';
 import 'package:project/theme/theme.dart';
 
 class NavDrawer extends StatelessWidget {
-  final AuthService _auth =AuthService();
+  final AuthService _auth = AuthService();
   @override  
   Widget build(BuildContext context) {
     return Drawer(
