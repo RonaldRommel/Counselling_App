@@ -46,6 +46,7 @@ class _TeacherHomeState extends State<TeacherHome> {
         leading: GestureDetector(
           onTap: () {
             // on tap code
+            _auth.signOut();
           },
           child: Icon(
             Icons.menu,

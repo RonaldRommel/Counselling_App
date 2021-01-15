@@ -4,13 +4,16 @@ import 'package:project/theme/theme.dart';
 
 
 class Loading extends StatelessWidget {
+  Color primary;
+  Color secondary;
+  Loading({this.primary,this.secondary});
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: colors.pricolor,
+      color: primary??colors.pricolor,
       child: Center(
         child:SpinKitChasingDots(
-          color: colors.seccolor,
+          color: secondary??colors.seccolor,
           size: 50.0,
         ),
       ),

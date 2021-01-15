@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 import 'package:project/database/database.dart';
 
 class Wrapper extends StatelessWidget {
-  final bool loading =true;
   final AuthService _auth =AuthService();
   @override
   Widget build(BuildContext context) {
@@ -44,7 +43,7 @@ class Wrapper extends StatelessWidget {
           }
           else{
             _auth.signOut();
-            return Loading();
+            return Authenticate();
           }
         },
       );

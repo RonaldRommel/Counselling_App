@@ -8,17 +8,21 @@ import 'package:project/autheticate/authenticate.dart';
 
 class RouteGenerator{
   static Route<dynamic> generateRoute(RouteSettings settings){
-    final args=settings.arguments;
+    final  args=settings.arguments;
 
     switch (settings.name) {
       case '/':
+        final  args=settings.arguments;
         return MaterialPageRoute(builder:(context)=>Wrapper());
       case '/login':
+        final  args=settings.arguments;
         return MaterialPageRoute(builder: (context) => Login(user: args,));
       case '/hoddashboard':
+        final  args=settings.arguments;
         return MaterialPageRoute(builder:(context)=>HodHome());
-      case '/teacherlist':
-        return MaterialPageRoute(builder:(context)=>Teacher(data: args,));
+      case '/studentslist':
+        final args=settings.arguments as Map;
+        return MaterialPageRoute(builder:(context)=>Teacher(teacherinfo: args,));
       // case '/mappping':
       //   return MaterialPageRoute(builder:(context)=>Mapping());
 

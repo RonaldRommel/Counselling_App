@@ -1,113 +1,103 @@
 import 'package:flutter/material.dart';
-import 'package:project/models/ClassStudents.dart';
+import 'package:project/database/hod_database.dart';
+import 'package:project/shared/loading.dart';
 // import 'package:project/pages/drawer.dart';
 // import 'package:project/teacher.dart';
 import 'package:project/theme/theme.dart';
 class Teacher extends StatefulWidget {
-  final Map data;
-  Teacher({Key key,this.data}):super(key:key);
+  final Map teacherinfo;
+  // final String teacheruid;
+  Teacher({Key key,this.teacherinfo}):super(key:key);
   @override
   _TeacherState createState() => _TeacherState();
 }
 
 class _TeacherState extends State<Teacher> {
-   //list of students of class Students
-  List<Students> students=[
-    Students(name: "Ron",picture: "ronaldo.jpg",teacher: "",section: "C1"),
-    Students(name: "Mes",picture: "messi.jpg",teacher: "Messi",section: "C2"),
-    Students(name: "Inia",picture: "iniesta.jpg",teacher: "Ronaldo",section: "C1"),
-    Students(name: "Near",picture: "neymar.jpg",teacher: "Iniesta",section: "C1"),
-    Students(name: "Raldo",picture: "ronaldo.jpg",teacher: "Messi",section: "C2"),
-    Students(name: "Msia",picture: "messi.jpg",teacher: "Neymar",section: "C1"),
-    Students(name: "Iista",picture: "iniesta.jpg",teacher: "Ronaldo",section: "C1"),
-    Students(name: "Mar",picture: "neymar.jpg",teacher: "Messi",section: "C2"),
-    Students(name: "Aldo",picture: "ronaldo.jpg",teacher: "Ronaldo",section: "C2"),
-    Students(name: "Essi",picture: "messi.jpg",teacher: "Iniesta",section: "C1"),
-    Students(name: "Esta",picture: "iniesta.jpg",teacher: "Messi",section: "C2"),
-    Students(name: "Ney",picture: "neymar.jpg",teacher: "",section: "C1"),
-    Students(name: "Nado",picture: "ronaldo.jpg",teacher: "Iniesta",section: "C1"),
-    Students(name: "Messir",picture: "messi.jpg",teacher: "Neymar",section: "C2"),
-    Students(name: "Nasta",picture: "iniesta.jpg",teacher: "Messi",section: "C1"),
-    Students(name: "Nari",picture: "neymar.jpg",teacher: "",section: "C1"),
-  ]; 
-
+  List student=[];
+  final snackbar = SnackBar(
+    content: Text("No student is assigned"),
+    duration: Duration(seconds: 1),
+    backgroundColor: colors.pricolor,
+  );
   @override
   Widget build(BuildContext context) {
-  List<Students> stud=[];
-  //used to store arguments from nav.push
-  //used to store students of the clicked teacher
-  for (var i = 0; i < students.length ; i++) {
-    if(students[i].teacher==widget.data['name'])
-      stud.add(students[i]);
-  }
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height*0.08,
         backgroundColor: colors.pricolor,
         automaticallyImplyLeading: true,
-        title:Text("WNC",
+        title:Text(widget.teacherinfo['name'],
           style:  Theme.of(context).textTheme.headline1,
         ),
       ),
-      body: Column(
-        children: [
-          // row below appbar
-          Container(
-            color: colors.seccolor,
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.06,
-            padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-            child: Row(
-              children: [
-                Text(widget.data['name'],style: Theme.of(context).textTheme.headline2,),
-                Spacer(),
-                Text('${stud.length}',style: Theme.of(context).textTheme.headline2,),
-                SizedBox(width: 20,),
-              ],
-            ),
-          ),
-          // List
-          Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: stud.length,
-              itemBuilder: (context,index){
-                return Container(
-                  height: MediaQuery.of(context).size.height*0.1 ,
-                  child: Card(
-                    child: ListTile(
-                      onTap: (){},
-                      leading: CircleAvatar(
-                        radius: MediaQuery.of(context).size.height*0.035,
-                        backgroundColor: Colors.grey[400],
-                      ),
-                      title: Text(stud[index].name,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                      subtitle: Text("${students[index].section}",
-                        style: Theme.of(context).textTheme.bodyText2,
-                      ),
-                    )
+      body:FutureBuilder(
+        future: HodDatabase().studentsOfTeacher(widget.teacherinfo['uid']),
+        builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+          if(snapshot.connectionState==ConnectionState.done)
+          {
+            student=snapshot.data;
+            Future.delayed(Duration.zero,()async{
+              if(student.isEmpty)
+                Scaffold.of(context).showSnackBar(snackbar);
+            });
+            return Column(
+                children: [
+                  // row below appbar
+                  // Container(
+                  //   color: colors.seccolor,
+                  //   width: MediaQuery.of(context).size.width,
+                  //   height: MediaQuery.of(context).size.height*0.06,
+                  //   padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                  //   child: Row(
+                  //     children: [
+                  //       Text(widget.data['name'],style: Theme.of(context).textTheme.headline2,),
+                  //       Spacer(),
+                  //       Text('${stud.length}',style: Theme.of(context).textTheme.headline2,),
+                  //       SizedBox(width: 20,),
+                  //     ],
+                  //   ),
+                  // ),
+                  // List
+                  Expanded(
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: student.length,
+                      itemBuilder: (context,index){
+                        return Container(
+                          height: MediaQuery.of(context).size.height*0.1 ,
+                          child: Card(
+                            child: ListTile(
+                              onTap: (){},
+                              leading: CircleAvatar(
+                                radius: MediaQuery.of(context).size.height*0.035,
+                                backgroundColor: Colors.grey[400],
+                              ),
+                              title: Text(student[index].name,
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
+                              subtitle: Text("${student[index].department}",
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
+                            )
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.pushNamed(context, '/mapping');
-        },
-        backgroundColor: colors.seccolor,
-        foregroundColor: Colors.white,
-        elevation:10,
-        child: Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-
+                ],
+            );
+          }
+          if(snapshot.connectionState==ConnectionState.waiting){
+            return Loading(primary: Colors.white,secondary: colors.pricolor,);            
+          }
+          else
+          {
+            return Loading();
+          }
+        }
+      )
     );
   }
 }

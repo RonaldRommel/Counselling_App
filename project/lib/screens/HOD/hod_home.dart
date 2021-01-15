@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project/database/hod_database.dart';
+import 'package:project/screens/HOD/assigning.dart';
 import 'package:project/screens/HOD/teacher_list.dart';
 import 'package:project/services/auth.dart';
 import 'package:project/shared/drawer.dart';
@@ -12,10 +13,13 @@ import 'package:provider/provider.dart';
 class HodHome extends StatelessWidget {
   final String department;
   HodHome({this.department});
+  HodDatabase db=HodDatabase();
+  
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<Teachers>>.value(
-      value: HodDatabase(department: this.department).teachers,
+      value:HodDatabase(department: this.department).teachers ,
+      // HodDatabase(department: this.department).teachers,
       child: Scaffold(
         backgroundColor: Colors.grey[100],
         endDrawer:NavDrawer(),
@@ -53,11 +57,12 @@ class HodHome extends StatelessWidget {
                 children: [
                   Text('${this.department} Department',style: Theme.of(context).textTheme.headline2,),
                   Spacer(),
-                  FlatButton(
-                    textColor: Colors.white,
-                    onPressed: (){print("add");}, 
-                    child: Icon(Icons.person_add),
-                  ),
+                  Text("x220"),
+                  // FlatButton(
+                  //   textColor: Colors.white,
+                  //   onPressed: (){print("add");}, 
+                  //   child: Icon(Icons.person_add),
+                  // ),
                 ],
               ),
             ),
@@ -67,6 +72,18 @@ class HodHome extends StatelessWidget {
             ),
           ],
         ),
+        floatingActionButton: Assign(),
+        // floatingActionButton: FloatingActionButton(
+        //   backgroundColor: colors.seccolor,
+        //   child: IconButton(
+        //     icon: Icon(Icons.add), 
+        //     onPressed: (){
+        //       HodDatabase().assignStudents(3);
+        //     },
+        //   ),
+        //   onPressed:null, 
+        // ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
         bottomNavigationBar: BottomAppBar(
           elevation: 15,
           color: colors.pricolor,

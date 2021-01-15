@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project/models/Classteacher.dart';
 import 'package:project/theme/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:project/database/hod_database.dart';
 
 class Teacherlist extends StatefulWidget {
   @override
@@ -22,11 +23,11 @@ class _TeacherlistState extends State<Teacherlist> {
           child: Card(
             child: ListTile(
               onTap: (){
-                // print(teachers[index].name);
-                // Navigator.pushNamed(context, '/teacherlist',arguments: {
-                //   'name': teachers[index].name,
-                //   'students':teachers[index].students,
-                // } );
+                Navigator.pushNamed(context, '/studentslist',arguments: {
+                  "name": teachers[index].name,
+                  "uid": teachers[index].uid
+                });
+                print("NAME:${teachers[index].name}, UID:${teachers[index].uid}");
               },
               leading: CircleAvatar(
                 radius: MediaQuery.of(context).size.height*0.035,
@@ -38,6 +39,16 @@ class _TeacherlistState extends State<Teacherlist> {
               ),
               subtitle: Text("${teachers[index].students} students",
                 style: Theme.of(context).textTheme.bodyText2,
+              ),
+              trailing: Checkbox(
+                value: teachers[index].checkBoxValue,
+                onChanged: (bool value){
+                  print(value);
+                  setState(() {
+                    teachers[index].checkBoxValue=value;
+                  });
+                },
+                activeColor: colors.pricolor,
               ),
             )
           ),
