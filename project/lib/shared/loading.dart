@@ -4,8 +4,8 @@ import 'package:project/theme/theme.dart';
 
 
 class Loading extends StatelessWidget {
-  Color primary;
-  Color secondary;
+  final Color primary;
+  final Color secondary;
   Loading({this.primary,this.secondary});
   @override
   Widget build(BuildContext context) {

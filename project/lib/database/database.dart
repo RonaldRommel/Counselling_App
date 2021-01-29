@@ -19,6 +19,7 @@ class DatabaseService{
       }
     );
     print('user uid : ${this.uid}');
+    await Future.delayed(Duration(seconds: 2));
     return user;
   }
 

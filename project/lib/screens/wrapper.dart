@@ -1,10 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project/autheticate/authenticate.dart';
 import 'package:project/models/user.dart';
 import 'package:project/screens/HOD/hod_home.dart';
 import 'package:project/screens/Student/student_home.dart';
 import 'package:project/screens/Teacher/teacher_home.dart';
+import 'package:project/screens/splash_screen.dart';
 import 'package:project/services/auth.dart';
 import 'package:project/shared/loading.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +39,7 @@ class Wrapper extends StatelessWidget {
             }
           }
           else if(user.connectionState==ConnectionState.waiting){
-            return Loading();            
+            return SplashScreen();        
           }
           else{
             _auth.signOut();

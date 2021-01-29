@@ -16,7 +16,7 @@ class HodDatabase{
   //stream for teacher of a department
   Stream<List<Teachers>> get teachers{
       CollectionReference dep = FirebaseFirestore.instance.collection(_department());
-    return dep.snapshots().map(_teacherlist);
+    return dep.orderBy("students",descending:false).snapshots().map(_teacherlist);
   }
 
   //List of teachers
@@ -24,6 +24,7 @@ class HodDatabase{
     return snapshot.docs.map((teacher){
       return Teachers(
         name: teacher.data()['name'],
+        department: teacher.data()['department'],
         students: teacher.data()['students'],
         picture: teacher.data()['picture'],
         uid: teacher.data()['uid'],
@@ -40,7 +41,7 @@ class HodDatabase{
   }
   
   //returns list of students of a branch
-  Future<List> studentList() async{
+  Future<List> studentList(String department) async{
     List studentslist=[];
     var years=await yearList();
     for (var year in years.docs) {
@@ -48,14 +49,16 @@ class HodDatabase{
       CollectionReference studentsYear = FirebaseFirestore.instance.collection(year.data()['year'].toString());
       var students =await studentsYear.get();
       for (var student in students.docs) {
-        studentslist.add(
-          Students(
-            name: student.data()['name'],
-            uid: student.data()['uid'],
-            department: student.data()['department'],
-            teacher: student.data()['teacher'],
-          )
-        );
+        if(student.data()['department']==department){
+          studentslist.add(
+            Students(
+              name: student.data()['name'],
+              uid: student.data()['uid'],
+              department: student.data()['department'],
+              teacher: student.data()['teacher'],
+            )
+          );
+        }
       }
       print("SUCCESFUL");
     }
@@ -63,8 +66,7 @@ class HodDatabase{
   }
 
   //Returns list of students of a teacher
-  Future<List> studentsOfTeacher(String uid) async{
-    List studentslist= await studentList();
+  List studentsOfTeacher(List studentslist,String uid) {
     List studentofteacher=[];
     for (var student in studentslist) {
       if(student.teacher==uid)
@@ -75,17 +77,11 @@ class HodDatabase{
     return studentofteacher;
   }
 
-
-
-
-
-  //Assign students
-  Future<void> assignStudents(List teachers)async{
-    List students = await studentList();
+  //returns Map of List assigned and unassigned students
+  Future<Map> assignedStudents(List teachers,String department)async{
+    List students = await studentList(department);
     List assigned=[];
     List unassigned=[];
-    int spt;//students per teacher
-    spt=(students.length/teachers.length).ceil();
     for (var student in students) {
       if(student.teacher=="null"){
         unassigned.add(student);
@@ -94,17 +90,26 @@ class HodDatabase{
         assigned.add(student);
       }
     }
-    print("Number of students assigned : ${assigned.length}");
-    print("Number of students unassigned : ${unassigned.length}");
-    print("Number of students per teacher : $spt");
-    // 
-
-
-
-
+    return ({"assigned":assigned,"unassigned":unassigned});
   }
 
-
+  //assigning students to teachers
+  Future<void> assigning(List unassigned,List teachers,int spt)async{
+    int len=unassigned.length;
+    for (var teacher in teachers) {
+      int counter=teacher.students;
+      while(counter<=spt){
+        //todo assign students
+        if(len>0)
+        {
+          len--;
+        }
+        else{
+          return "All done";
+        }
+      }
+    }
+  }
 
 
 
