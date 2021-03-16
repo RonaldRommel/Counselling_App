@@ -28,11 +28,13 @@ class Wrapper extends StatelessWidget {
             switch(user.data['role'])
             {
               case 'Hod':
-                return HodHome(department: user.data['department'],);
+                return HodHome(department: user.data['department'],uid: user.data["uid"],);
               case 'Teacher':
                 return TeacherHome();
               case 'Student':
-                return StudentHome();  
+              print("WRAPPER");
+              print(user.data);
+                return StudentHome(department: user.data["department"],uid: user.data["uid"],year: user.data["year"],);  
               default:
                 _auth.signOut();
                 return Authenticate();

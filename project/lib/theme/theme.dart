@@ -28,6 +28,11 @@ ThemeData basicTheme(){
         fontSize: 17,
         color: Colors.black54,
       ),
+      headline3: base.headline3.copyWith(
+        fontFamily :"Roboto",
+        fontWeight:FontWeight.bold,
+        fontSize:20,
+      )
     );
   }
   final ThemeData base=ThemeData.light();

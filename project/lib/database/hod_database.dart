@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:project/models/ClassStudents.dart';
 import 'package:project/models/Classteacher.dart';
+import 'package:project/models/hoduser.dart';
 
 
 class HodDatabase{
@@ -31,6 +32,23 @@ class HodDatabase{
         checkBoxValue: false,
       );
     }).toList();
+  }
+
+  //get Hoduser stream
+  Stream<HodUser> hodData(String uid) {
+      CollectionReference hod = FirebaseFirestore.instance.collection("Hod");
+    return hod.doc(uid).snapshots()
+      .map(_hodDataFromSnapshot);
+  }
+
+  //HodUser data from snapshot
+  HodUser _hodDataFromSnapshot(DocumentSnapshot snapshot) {
+    return HodUser(
+      uid: snapshot.data()['uid'],
+      name: snapshot.data()['name'],
+      department:snapshot.data()['department'],
+      phone:snapshot.data()['phone'],
+    );
   }
 
 

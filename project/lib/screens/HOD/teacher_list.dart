@@ -12,12 +12,14 @@ class Teacherlist extends StatefulWidget {
 }
 
 class _TeacherlistState extends State<Teacherlist> {
-  final snackbar = SnackBar(
-    content: Text("No student is assigned ",style: TextStyle(color:colors.pricolor),),
-    duration: Duration(seconds: 1),
-    backgroundColor: Colors.white,
-    behavior: SnackBarBehavior.floating,
-  );
+  Widget snackbar(String message){
+      return SnackBar(
+      content: Text(message,textAlign: TextAlign.center,),
+      duration: Duration(seconds: 1),
+      backgroundColor: colors.pricolor,
+      behavior: SnackBarBehavior.floating,
+    );
+  }
   @override
   Widget build(BuildContext context) {
     final teachers =Provider.of<List<Teachers>>(context)??[];
@@ -44,7 +46,7 @@ class _TeacherlistState extends State<Teacherlist> {
                   });
                 }
                 else{
-                  Scaffold.of(context).showSnackBar(snackbar);
+                  Scaffold.of(context).showSnackBar(snackbar("${teachers[index].name} does not have any students"));
                 }
                 print("NAME:${teachers[index].name}, UID:${teachers[index].uid}");
               },

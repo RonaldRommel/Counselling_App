@@ -23,7 +23,7 @@ class AuthService{
     try{
       UserCredential result =await _auth.signInWithEmailAndPassword(email: email, password: password).timeout(const Duration(seconds: 10));
       User user = result.user;
-      print("Sign in worked");
+      print("Sign in worked $user");
       return _userFromFirebaseUser(user);
     }
     on PlatformException{

@@ -1,15 +1,14 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:project/models/hoduser.dart';
+import 'package:project/models/ClassStudents.dart';
 import 'package:project/services/auth.dart';
 import 'package:project/theme/theme.dart';
 import 'package:provider/provider.dart';
 
-class NavDrawer extends StatelessWidget {
+class StudentDrawer extends StatelessWidget {
   final AuthService _auth = AuthService();
   @override  
   Widget build(BuildContext context) {
-  final hoddata=Provider.of<HodUser>(context);
+  final studentdata=Provider.of<Students>(context);
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -26,12 +25,12 @@ class NavDrawer extends StatelessWidget {
                   backgroundColor: Colors.white,
                   radius: 32.0,
                   child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/user.jpg'),
+                      backgroundImage: NetworkImage(studentdata.picture),
                       radius: 30.0,
                   ),
                 ),
                 SizedBox(height: 15,),
-                Text("${hoddata.name}",
+                Text("${studentdata.name}",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18 

@@ -1,31 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:project/services/auth.dart';
+import 'package:project/database/student_database.dart';
+import 'package:project/models/ClassStudents.dart';
+import 'package:project/services/studentroutegenerator.dart';
 import 'package:project/theme/theme.dart';
+import 'package:provider/provider.dart';
 
-class StudentHome extends StatefulWidget {
-  @override
-  _StudentHomeState createState() => _StudentHomeState();
-}
-
-class _StudentHomeState extends State<StudentHome> {
-  final AuthService _auth =AuthService();
+class StudentHome extends StatelessWidget {
+  final String uid;
+  final String department;
+  final int year;
+  StudentHome({this.department,this.uid,this.year});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: colors.pricolor,
-        title: Text(
-          "Student",
-          style: Theme.of(context).textTheme.headline1,
-        ),
-      ),
-      body: Center(
-        child: FlatButton(
-          onPressed: (){
-            _auth.signOut();            
-          },
-          child: Icon(Icons.logout),
-        ),
+    return StreamProvider<Students>.value(
+      initialData: Students.initialData(),
+      value: StudentDatabase(department: this.department,uid: this.uid,year: this.year).studentData,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: basicTheme(),
+        initialRoute: '/',
+        onGenerateRoute: StudentRouteGenerator.generateRoute,
+
       ),
     );
   }

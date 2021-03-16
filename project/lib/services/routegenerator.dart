@@ -21,12 +21,14 @@ class RouteGenerator{
       case '/studentslist':
         final args=settings.arguments as Map;
         return MaterialPageRoute(builder:(context)=>Teacher(teacherinfo: args,));
-      // case '/mappping':
-      //   return MaterialPageRoute(builder:(context)=>Mapping());
-
-      return  _errorRoute();
+      // case '/studentProfile':
+      //   final args=settings.arguments ;
+      //   return MaterialPageRoute(builder: (context)=>StudentProfile(studentProfile: args,));
+      // case '/studentTable':
+      //   final args=settings.arguments ;
+      //   return MaterialPageRoute(builder: (context)=>StudentTable());
       default:
-        _errorRoute();
+        return  _errorRoute();
     }
   }
   static Route<dynamic> _errorRoute(){
